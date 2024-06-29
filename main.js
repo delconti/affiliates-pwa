@@ -11,7 +11,7 @@ registrationForm.addEventListener('submit', async (event) => {
     const data = {
         name: formData.get('name'),
         email: formData.get('email'),
-        phone: formData.get('phone'),
+        phone: formData.get('phone').replace(/\D/g, ''), // Remove formatação
         affiliateId: formData.get('affiliateId'),
     };
 
@@ -43,7 +43,7 @@ registrationForm.addEventListener('submit', async (event) => {
                     identifier: data.affiliateId,
                     tags: {
                         email: data.email,
-                        phone: data.phone
+                        phone: `+55${data.phone}`
                     }
                 })
             });
