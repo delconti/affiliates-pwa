@@ -9,7 +9,6 @@ registrationForm.addEventListener('submit', async (event) => {
     
     const formData = new FormData(registrationForm);
     const data = {
-        name: formData.get('name'),
         email: formData.get('email'),
         phone: formData.get('phone'),
         affiliateId: formData.get('affiliateId'),
@@ -19,19 +18,20 @@ registrationForm.addEventListener('submit', async (event) => {
     window.OneSignal = window.OneSignal || [];
     OneSignal.push(() => {
         OneSignal.init({
-            appId: "YOUR-ONESIGNAL-APP-ID",
+            appId: "SEU-ONESIGNAL-APP-ID", // Substitua por sua App ID
             allowLocalhostAsSecureOrigin: true,
         });
 
         OneSignal.push(() => {
             OneSignal.getUserId(async (userId) => {
                 if (userId) {
-                    // Save user information to OneSignal tags
+                    // Set external user ID
+                    OneSignal.setExternalUserId(data.affiliateId);
+                    
+                    // Save essential user information to OneSignal tags
                     await OneSignal.sendTags({
-                        name: data.name,
                         email: data.email,
-                        phone: data.phone,
-                        affiliateId: data.affiliateId,
+                        phone: data.phone
                     });
                 }
             });
