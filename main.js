@@ -13,7 +13,6 @@ registrationForm.addEventListener('submit', async (event) => {
         email: formData.get('email'),
         phone: formData.get('phone'),
         affiliateId: formData.get('affiliateId'),
-        userId: null, // This will be filled after OneSignal registration
     };
 
     // Initialize OneSignal
@@ -23,24 +22,20 @@ registrationForm.addEventListener('submit', async (event) => {
             appId: "YOUR-ONESIGNAL-APP-ID",
             allowLocalhostAsSecureOrigin: true,
         });
-        
+
         OneSignal.push(() => {
-            OneSignal.getUserId((userId) => {
-                data.userId = userId;
-                sendDataToServer(data);
+            OneSignal.getUserId(async (userId) => {
+                if (userId) {
+                    // Save user information to OneSignal tags
+                    await OneSignal.sendTags({
+                        userId: userId,
+                        name: data.name,
+                        email: data.email,
+                        phone: data.phone,
+                        affiliateId: data.affiliateId,
+                    });
+                }
             });
         });
     });
 });
-
-async function sendDataToServer(data) {
-    const response = await fetch('https://your-server-endpoint.com/register', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    });
-    const result = await response.json();
-    console.log(result);
-}
