@@ -3,13 +3,28 @@
     "short_name": "StartBETA",
     "start_url": "/",
     "display": "standalone",
-    "background_color": "#202020",
+    "background_color": "#ffffff",
     "theme_color": "#ADFF2E",
     "icons": [
         {
             "src": "icon.png",
             "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ],
+    "description": "Aplicativo para afiliados da Startbet receberem notificações.",
+    "id": "/",
+    "orientation": "portrait",
+    "screenshots": [
+        {
+            "src": "screenshot1.png",
+            "sizes": "1280x720",
             "type": "image/png"
         }
-    ]
+    ],
+    "categories": ["entertainment", "news"],
+    "lang": "pt-BR",
+    "dir": "ltr",
+    "scope": "/"
 }
