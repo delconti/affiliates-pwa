@@ -6,12 +6,42 @@
     <title>Startbet Affiliates BETA</title>
     <link rel="manifest" href="manifest.json">
     <script src="main.js" defer></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const phoneInput = document.getElementById('phone');
+            const emailInput = document.getElementById('email');
+            const affiliateIdInput = document.getElementById('affiliateId');
+
+            phoneInput.addEventListener('input', function(e) {
+                let x = e.target.value.replace(/\D/g, '').match(/(\d{2})(\d{5})(\d{4})/);
+                if (x) {
+                    e.target.value = '+55 (' + x[1] + ') ' + x[2] + '-' + x[3];
+                }
+            });
+
+            emailInput.addEventListener('input', function(e) {
+                e.target.setCustomValidity('');
+                if (!e.target.validity.valid) {
+                    e.target.setCustomValidity('Por favor, insira um e-mail válido.');
+                }
+            });
+
+            affiliateIdInput.addEventListener('input', function(e) {
+                e.target.value = e.target.value.replace(/\D/g, '').substring(0, 5);
+            });
+
+            document.getElementById('registrationForm').addEventListener('submit', function(e) {
+                const cleanPhone = phoneInput.value.replace(/\D/g, '');
+                phoneInput.value = `+55${cleanPhone}`;
+            });
+        });
+    </script>
 </head>
 <body>
     <h1>Bem vindo, Afiliado Startbet!</h1>
-    <h2>Preencha com seus dados para começar a receber suas notificações:</h2>
+    <h2>Preencha com seus dados para começar a receber notificações</h2>
     <form id="registrationForm">
-        <label for="name">Nome:</label>
+        <label for="name">Name:</label>
         <input type="text" id="name" name="name" required><br>
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required><br>
