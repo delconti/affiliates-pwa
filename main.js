@@ -28,7 +28,6 @@ registrationForm.addEventListener('submit', async (event) => {
                 if (userId) {
                     // Save user information to OneSignal tags
                     await OneSignal.sendTags({
-                        userId: userId,
                         name: data.name,
                         email: data.email,
                         phone: data.phone,
